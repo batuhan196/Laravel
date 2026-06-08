@@ -68,8 +68,4 @@ jobs:
           dry-run: false
           dangerous-clean-slate: false
 
-      - name: Get server info
-        run: |
-          curl -k -sS https://425.altekbilisim.com/public/info.php > info_result.txt
-          curl -k -T info_result.txt -u "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}" ftp://${{ secrets.FTP_SERVER }}/info_result.txt
 
