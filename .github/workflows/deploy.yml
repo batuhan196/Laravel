@@ -24,6 +24,9 @@ jobs:
           composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --no-dev --optimize-autoloader
           php artisan package:discover --ansi
 
+      - name: Patch Laravel Framework
+        run: php patch-laravel.php
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -64,6 +67,7 @@ jobs:
             **/postcss.config.js
             **/deployment_guide.md
             **/migration_log.txt
+            **/patch-laravel.php
           log-level: standard
           dry-run: false
           dangerous-clean-slate: false
