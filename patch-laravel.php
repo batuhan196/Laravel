@@ -21,7 +21,25 @@ if (file_exists($file)) {
     );
 
     file_put_contents($file, $content);
-    echo "Laravel Framework patched successfully!\n";
+    echo "Str.php patched successfully!\n";
 } else {
     echo "Error: Str.php not found!\n";
 }
+
+$containerFile = __DIR__ . '/vendor/laravel/framework/src/Illuminate/Container/Container.php';
+if (file_exists($containerFile)) {
+    $content = file_get_contents($containerFile);
+    
+    // Replace ReflectionFunction::isAnonymous() with a compatibility check
+    $content = str_replace(
+        '($reflector = new ReflectionFunction($callback(...)))->isAnonymous()',
+        '(method_exists($reflector = new ReflectionFunction($callback(...)), \'isAnonymous\') ? $reflector->isAnonymous() : str_contains($reflector->getName(), \'{closure}\'))',
+        $content
+    );
+
+    file_put_contents($containerFile, $content);
+    echo "Container.php patched successfully!\n";
+} else {
+    echo "Error: Container.php not found!\n";
+}
+
